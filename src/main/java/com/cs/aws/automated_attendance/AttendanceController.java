@@ -2,17 +2,9 @@ package com.cs.aws.automated_attendance;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.rekognition.model.Image;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.IOUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,18 +13,17 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 @RestController
+@RequestMapping("/face")
 public class AttendanceController {
-    @PostMapping("/match")
-    public String match(String path){
 
-        String imagePath = null;
-        imagePath = "/Users/nuwantissera/Documents/GitHub/FaceDetector/imgs/image.jpeg";
+    @RequestMapping("/match")
+    public String match(@RequestParam(value = "path") String path){ ;
 
         FaceComparer faceComparer = new FaceComparer();
 
         ByteBuffer sourceImageBytes = null;
         try {
-            sourceImageBytes = ByteBuffer.wrap(IOUtils.toByteArray(new FileInputStream(new File(imagePath))));
+            sourceImageBytes = ByteBuffer.wrap(IOUtils.toByteArray(new FileInputStream(new File(path))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,6 +34,7 @@ public class AttendanceController {
 
         return name;
     }
+
 
     @PostMapping("/upload")
     public void upload(@RequestPart(value = "file") MultipartFile file){
