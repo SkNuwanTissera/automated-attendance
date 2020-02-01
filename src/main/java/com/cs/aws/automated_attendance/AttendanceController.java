@@ -54,4 +54,9 @@ public class AttendanceController {
         }
     }
 
+    @GetMapping("/")
+    public String index(){
+        return "<h1>Automated Attendance System</h1>";
+    }
+
 }
