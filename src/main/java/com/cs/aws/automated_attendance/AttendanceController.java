@@ -17,7 +17,7 @@ import java.nio.ByteBuffer;
 public class AttendanceController {
 
     @RequestMapping("/match")
-    public String match(@RequestParam(value = "path") String path){ ;
+    public String match(@RequestPart(value = "path") String path){
 
         FaceComparer faceComparer = new FaceComparer();
 

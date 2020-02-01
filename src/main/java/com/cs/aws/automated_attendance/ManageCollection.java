@@ -2,7 +2,10 @@ package com.cs.aws.automated_attendance;
 
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.model.*;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.util.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,7 +14,16 @@ import java.nio.ByteBuffer;
 
 public class ManageCollection {
     AmazonRekognition rekognition = null;
+    AmazonS3 s3client = null;
 
+    @Value("${rekognitionConfigs.collectionName}")
+    private String collectionName;
+
+    @Value("${rekognitionConfigs.localPath}")
+    private String localPath;
+
+    @Value("${s3Configs.faceBucket}")
+    private String s3BucketName;
     /**
      * Constructors
      */
@@ -25,7 +37,7 @@ public class ManageCollection {
     public void createCollection() {
         try {
             CreateCollectionRequest req = new CreateCollectionRequest();
-            req.setCollectionId("cloudProject");
+            req.setCollectionId(collectionName);
             CreateCollectionResult result = rekognition.createCollection(req);
             if(result.getStatusCode()==200)
                 System.out.println("Collection created");
@@ -35,11 +47,18 @@ public class ManageCollection {
     }
 
     /**
-     * addFacesToCollection
+     * addFacesToCollection using file in local machine
      */
     public void addFacesToCollection() {
+        processCollection(localPath);
+    }
+
+    private void processCollection(String path) {
         try {
-            File directory = new File("/Users/nuwantissera/Documents/GitHub/FaceDetector/imgs/faces/");
+            /**
+             * Todo : Use s3 as repository
+             */
+            File directory = new File(path);
             File[] files = directory.listFiles();
             for (File targetImgFileName : files) {
                 try {
@@ -49,7 +68,7 @@ public class ManageCollection {
                     Image target = new Image().withBytes(targetImageBytes);
 
                     IndexFacesRequest req = new IndexFacesRequest();
-                    req.setCollectionId("cloudProject");
+                    req.setCollectionId(collectionName);
                     req.setImage(target);
                     req.setExternalImageId(targetImgFileName.getName().toLowerCase().replace(".jpg", ""));
 
@@ -68,12 +87,19 @@ public class ManageCollection {
     }
 
     /**
+     * addFacesToCollection using file in local machine
+     */
+    public void addFacesToCollectionFromS3() {
+        ObjectListing objectListing = s3client.listObjects(s3BucketName);
+    }
+
+    /**
      * searchFacesByImageResult
      */
     public String searchFacesByImageResult(Image image) {
         try {
             SearchFacesByImageRequest req = new SearchFacesByImageRequest();
-            req.setCollectionId("cloudProject");
+            req.setCollectionId(collectionName);
             req.setImage(image);
             req.setFaceMatchThreshold(70F);
             req.withMaxFaces(1);

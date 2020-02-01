@@ -7,6 +7,8 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.Image;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +17,18 @@ public class FaceComparer {
     private AmazonRekognition rekognitionClient;
     private ManageCollection mc;
     private AmazonSNS snsClient;
+    private AmazonS3 s3Client;
+
+    @Value("${rekognitionConfigs.collectionName}")
+    private String collectionName;
+
+    @Value("${rekognitionConfigs.localPath}")
+    private String localPath;
 
     public FaceComparer() {
+
         AWSCredentials credentials;
+
         try {
             credentials = new ProfileCredentialsProvider("default").getCredentials();
         } catch (Exception e) {
@@ -31,6 +42,8 @@ public class FaceComparer {
 
         snsClient = AmazonSNSClientBuilder.standard().withRegion("us-east-1")
                 .withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+
+        s3Client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
         System.out.println("\nAWS Rekognition Initialized...");
 
@@ -46,7 +59,8 @@ public class FaceComparer {
     private void loadTargetImages() {
         try {
             mc.createCollection();
-            mc.addFacesToCollection();
+            //mc.addFacesToCollection();
+            mc.addFacesToCollectionFromS3();
         } catch (Exception e) {
             e.printStackTrace();
         }

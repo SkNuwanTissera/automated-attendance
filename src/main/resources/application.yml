@@ -1,3 +1,9 @@
 amazonProperties:
   endpointUrl: https://s3.us-east-2.amazonaws.com
-  bucketName: bucketsk1995
+
+rekognitionConfigs:
+  collectionName: cloudProject
+  localPath:
+
+s3Configs:
+  faceBucket:
