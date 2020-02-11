@@ -43,7 +43,7 @@ public class FaceComparer {
         snsClient = AmazonSNSClientBuilder.standard().withRegion("us-east-1")
                 .withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
-        s3Client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+        s3Client = AmazonS3ClientBuilder.standard().withRegion("us-east-1").withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
 
         System.out.println("\nAWS Rekognition Initialized...");
 
@@ -59,8 +59,8 @@ public class FaceComparer {
     private void loadTargetImages() {
         try {
             mc.createCollection();
-            //mc.addFacesToCollection();
-            mc.addFacesToCollectionFromS3();
+            mc.addFacesToCollection();
+//            mc.addFacesToCollectionFromS3();
         } catch (Exception e) {
             e.printStackTrace();
         }

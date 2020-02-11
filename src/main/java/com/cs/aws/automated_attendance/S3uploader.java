@@ -8,6 +8,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.cs.aws.automated_attendance.config.S3Config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,12 +19,14 @@ import java.io.IOException;
 import java.util.Date;
 
 public class S3uploader {
-    @Value("${amazonProperties.endpointUrl}")
-    private String endpointUrl;
-    @Value("${amazonProperties.bucketName}")
-    private String bucketName = "bucketsk1995";
+
+//    @Autowired
+//    private S3Config s3Config;
+
+    private String endpointUrl ="https://s3.us-east-2.amazonaws.com";
+    private String faceBucket = "bucketsk1995";
+
     private AmazonS3 amazonS3;
-    private String stringObjKeyName = "fuck.jpeg";
 
     public S3uploader() {
         AWSCredentials credentials;
@@ -43,7 +47,7 @@ public class S3uploader {
 
 
     private void uploadFileTos3bucket(String fileName, File file) {
-        amazonS3.putObject(new PutObjectRequest(bucketName, fileName, file)
+        amazonS3.putObject(new PutObjectRequest(faceBucket, fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
@@ -53,7 +57,7 @@ public class S3uploader {
         try {
             File file = convertMultiPartToFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            fileUrl = endpointUrl + "/" + faceBucket + "/" + fileName;
             uploadFileTos3bucket(fileName, file);
             file.delete();
         } catch (Exception e) {

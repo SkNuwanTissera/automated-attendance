@@ -16,7 +16,7 @@ import java.nio.ByteBuffer;
 @RequestMapping("/face")
 public class AttendanceController {
 
-    @RequestMapping("/match")
+    @PostMapping("/match")
     public String match(@RequestPart(value = "path") String path){
 
         FaceComparer faceComparer = new FaceComparer();
@@ -35,14 +35,13 @@ public class AttendanceController {
         return name;
     }
 
-
     @PostMapping("/upload")
-    public void upload(@RequestPart(value = "file") MultipartFile file){
+    public String upload(@RequestPart(value = "file") MultipartFile file){
 
         S3uploader s3uploader = new S3uploader();
         try{
             // Upload a text string as a new object.
-            s3uploader.uploadFile(file);
+            return s3uploader.uploadFile(file);
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process
             // it, so it returned an error response.
@@ -52,11 +51,26 @@ public class AttendanceController {
             // couldn't parse the response from Amazon S3.
             e.printStackTrace();
         }
+        return "Error in Uploading !!";
     }
 
     @GetMapping("/")
     public String index(){
         return "<h1>Automated Attendance System</h1>";
+    }
+
+    @GetMapping("/trigger")
+    public Integer triggerLambda(){
+
+        LambdaTrigger lambdaTrigger = new LambdaTrigger();
+
+        try {
+            return lambdaTrigger.invoke().getStatusCode();
+
+        }catch (SdkClientException e){
+            e.printStackTrace();
+        }
+        return 404;
     }
 
 }

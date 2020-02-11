@@ -16,14 +16,14 @@ public class ManageCollection {
     AmazonRekognition rekognition = null;
     AmazonS3 s3client = null;
 
-    @Value("${rekognitionConfigs.collectionName}")
-    private String collectionName;
+//    @Value("${rekognitionConfigs.collectionName}")
+    private String collectionName = "cloudProject2";
 
-    @Value("${rekognitionConfigs.localPath}")
-    private String localPath;
-
-    @Value("${s3Configs.faceBucket}")
-    private String s3BucketName;
+//   @Value("${rekognitionConfigs.localPath}")
+    private String localPath = "C:\\Users\\Nuwan Tissera\\Desktop\\images";
+//
+//   @Value("${s3config.faceBucket}")
+    private String s3BucketName = "bucketsk1995";
     /**
      * Constructors
      */
