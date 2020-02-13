@@ -20,8 +20,8 @@ public class ManageCollection {
     private String collectionName = "cloudProject2";
 
 //   @Value("${rekognitionConfigs.localPath}")
-    private String localPath = "C:\\Users\\Nuwan Tissera\\Desktop\\images";
-//
+    private String localPath = "src/main/java/com/cs/aws/automated_attendance/images/";
+
 //   @Value("${s3config.faceBucket}")
     private String s3BucketName = "bucketsk1995";
     /**
@@ -90,7 +90,8 @@ public class ManageCollection {
      * addFacesToCollection using file in local machine
      */
     public void addFacesToCollectionFromS3() {
-        ObjectListing objectListing = s3client.listObjects(s3BucketName);
+
+
     }
 
     /**

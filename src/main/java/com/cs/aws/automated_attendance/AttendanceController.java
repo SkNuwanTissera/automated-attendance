@@ -39,9 +39,15 @@ public class AttendanceController {
     public String upload(@RequestPart(value = "file") MultipartFile file){
 
         S3uploader s3uploader = new S3uploader();
+      //  FaceComparer faceComparer = new FaceComparer();
+        String fileUrl = "";
         try{
             // Upload a text string as a new object.
-            return s3uploader.uploadFile(file);
+            fileUrl = s3uploader.uploadFile(file);
+            System.out.println("File Uploaded Successfully !! "+fileUrl);
+            return fileUrl;
+            //faceComparer.loadTargetImages();
+
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process
             // it, so it returned an error response.

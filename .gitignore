@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+###custom
+src/main/java/com/cs/aws/automated_attendance/images

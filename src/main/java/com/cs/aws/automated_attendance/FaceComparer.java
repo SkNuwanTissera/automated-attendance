@@ -28,7 +28,9 @@ public class FaceComparer {
     public FaceComparer() {
 
         AWSCredentials credentials;
-
+        /**
+        https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html#cli-quick-configuration
+         **/
         try {
             credentials = new ProfileCredentialsProvider("default").getCredentials();
         } catch (Exception e) {
@@ -49,18 +51,18 @@ public class FaceComparer {
 
         mc = new ManageCollection(rekognitionClient);
 
-        loadTargetImages();
+       // loadTargetImages();
 
     }
 
     /**
      *
      */
-    private void loadTargetImages() {
+    public void loadTargetImages() {
         try {
             mc.createCollection();
-            mc.addFacesToCollection();
-//            mc.addFacesToCollectionFromS3();
+//            mc.addFacesToCollection();
+            mc.addFacesToCollectionFromS3();
         } catch (Exception e) {
             e.printStackTrace();
         }
