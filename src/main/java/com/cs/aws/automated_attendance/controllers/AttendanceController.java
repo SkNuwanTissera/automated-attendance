@@ -1,9 +1,12 @@
-package com.cs.aws.automated_attendance;
+package com.cs.aws.automated_attendance.controllers;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.util.IOUtils;
+import com.cs.aws.automated_attendance.FaceComparer;
+import com.cs.aws.automated_attendance.LambdaTrigger;
+import com.cs.aws.automated_attendance.S3uploader;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
