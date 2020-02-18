@@ -1,5 +1,6 @@
 package com.cs.aws.automated_attendance.controllers;
 
+import com.cs.aws.automated_attendance.exceptions.ResourceNotFoundException;
 import com.cs.aws.automated_attendance.repository.AttendanceRepository;
 import com.cs.aws.automated_attendance.repository.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,14 @@ public class StudentController {
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Student> getAllStudents() {
         return attendanceRepository.findAll();
+    }
+
+    @DeleteMapping(path="/delete/{id}")
+    public @ResponseBody ResponseEntity<?> deleteStudent(@PathVariable Long id){
+        Student student = attendanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
+        attendanceRepository.delete(student);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping(path="/update/{id}")
