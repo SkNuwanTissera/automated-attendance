@@ -3,35 +3,34 @@ package com.cs.aws.automated_attendance.controllers;
 import com.cs.aws.automated_attendance.repository.AttendanceRepository;
 import com.cs.aws.automated_attendance.repository.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Controller
+@RestController
 @RequestMapping(path="/student")
 public class StudentController {
     @Autowired
     private AttendanceRepository attendanceRepository;
 
     @PostMapping(path="/add")
-    public @ResponseBody String addNewStudent (@RequestParam String id,
-                                               @RequestParam String fname,
-                                               @RequestParam String lname,
-                                               @RequestParam String email,
-                                               @RequestParam String notes,
-                                               @RequestParam String dob
+    public @ResponseBody ResponseEntity<Student> addNewStudent (@RequestParam String fname,
+                                           @RequestParam String lname,
+                                           @RequestParam String email,
+                                           @RequestParam String notes,
+                                           @RequestParam String dob
                                                ) {
         Student n = new Student();
-        n.setId(Long.parseLong(id));
+//        n.setId(Long.parseLong(id));
         n.setFname(fname);
         n.setLname(lname);
         n.setEmail(email);
         n.setNotes(notes);
         n.setDob(dob);
         attendanceRepository.save(n);
-        return "Saved";
+        return new ResponseEntity<Student>(n, HttpStatus.OK);
     }
 
     @GetMapping(path="/all")
