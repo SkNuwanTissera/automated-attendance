@@ -51,7 +51,7 @@ public class FaceComparer {
 
         mc = new ManageCollection(rekognitionClient);
 
-       // loadTargetImages();
+      //  loadTargetImages();
 
     }
 
@@ -61,8 +61,8 @@ public class FaceComparer {
     public void loadTargetImages() {
         try {
             mc.createCollection();
-//            mc.addFacesToCollection();
-            mc.addFacesToCollectionFromS3();
+            mc.addFacesToCollection();
+//            mc.addFacesToCollectionFromS3();
         } catch (Exception e) {
             e.printStackTrace();
         }

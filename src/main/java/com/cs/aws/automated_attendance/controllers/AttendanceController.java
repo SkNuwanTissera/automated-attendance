@@ -63,6 +63,13 @@ public class AttendanceController {
         return "Error in Uploading !!";
     }
 
+    @GetMapping("/index")
+    public String indexImages(){
+        FaceComparer faceComparer = new FaceComparer();
+        faceComparer.loadTargetImages();
+        return "Successfully Indexed !!";
+    }
+
     @GetMapping("/")
     public String index(){
         return "<h1>Automated Attendance System</h1>";

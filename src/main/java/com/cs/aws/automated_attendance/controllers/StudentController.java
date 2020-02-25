@@ -64,5 +64,4 @@ public class StudentController {
 
         return ResponseEntity.ok(attendanceRepository.save(s));
     }
-
 }
