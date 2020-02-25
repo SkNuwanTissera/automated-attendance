@@ -16,6 +16,15 @@ public class StudentController {
     @Autowired
     private AttendanceRepository attendanceRepository;
 
+    /**
+     * Add new Student
+     * @param fname
+     * @param lname
+     * @param email
+     * @param notes
+     * @param dob
+     * @return
+     */
     @PostMapping(path="/add")
     public @ResponseBody ResponseEntity<Student> addNewStudent (@RequestParam String fname,
                                            @RequestParam String lname,
@@ -34,11 +43,20 @@ public class StudentController {
         return new ResponseEntity<Student>(n, HttpStatus.OK);
     }
 
+    /**
+     * Get all students
+     * @return
+     */
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Student> getAllStudents() {
         return attendanceRepository.findAll();
     }
 
+    /**
+     * Delete student by ID
+     * @param id
+     * @return
+     */
     @DeleteMapping(path="/delete/{id}")
     public @ResponseBody ResponseEntity<?> deleteStudent(@PathVariable Long id){
         Student student = attendanceRepository.findById(id)
@@ -47,6 +65,12 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Update a student by ID
+     * @param id
+     * @param student
+     * @return
+     */
     @PutMapping(path="/update/{id}")
     public @ResponseBody ResponseEntity<Student> updateStudent(@PathVariable Long id,@Valid @RequestBody Student student){
 

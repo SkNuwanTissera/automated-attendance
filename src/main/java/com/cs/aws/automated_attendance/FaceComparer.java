@@ -56,7 +56,7 @@ public class FaceComparer {
     }
 
     /**
-     *
+     * CREATE COLLECTION AND LOAD IMAGED FROM REPOSITORY
      */
     public void loadTargetImages() {
         try {
@@ -69,8 +69,7 @@ public class FaceComparer {
     }
 
     /**
-     *
-     *
+     * COMPARE IMAGE WITH COLLECTION INDEXED IMAGES
      */
     public String compare(Image source){
         String name = mc.searchFacesByImageResult(source);

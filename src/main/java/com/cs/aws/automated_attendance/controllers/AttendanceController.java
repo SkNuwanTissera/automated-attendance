@@ -19,6 +19,11 @@ import java.nio.ByteBuffer;
 @RequestMapping("/face")
 public class AttendanceController {
 
+    /**
+     * Match face in input image with trained classifier
+     * @param path
+     * @return
+     */
     @PostMapping("/match")
     public String match(@RequestPart(value = "path") String path){
 
@@ -38,6 +43,11 @@ public class AttendanceController {
         return name;
     }
 
+    /**
+     * Upload files to S3
+     * @param file
+     * @return
+     */
     @PostMapping("/upload")
     public String upload(@RequestPart(value = "file") MultipartFile file){
 
@@ -63,6 +73,10 @@ public class AttendanceController {
         return "Error in Uploading !!";
     }
 
+    /**
+     * Index images in repository to train a classifier
+     * @return
+     */
     @GetMapping("/index")
     public String indexImages(){
         FaceComparer faceComparer = new FaceComparer();
@@ -70,11 +84,19 @@ public class AttendanceController {
         return "Successfully Indexed !!";
     }
 
+    /**
+     * Frontend routes
+     * @return
+     */
     @GetMapping("/")
     public String index(){
         return "<h1>Automated Attendance System</h1>";
     }
 
+    /**
+     * Sample Lambda trigger
+     * @return
+     */
     @GetMapping("/trigger")
     public Integer triggerLambda(){
 
