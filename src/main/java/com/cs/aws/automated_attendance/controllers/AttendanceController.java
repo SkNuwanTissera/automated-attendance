@@ -85,15 +85,6 @@ public class AttendanceController {
     }
 
     /**
-     * Frontend routes
-     * @return
-     */
-    @GetMapping("/")
-    public String index(){
-        return "<h1>Automated Attendance System</h1>";
-    }
-
-    /**
      * Sample Lambda trigger
      * @return
      */
