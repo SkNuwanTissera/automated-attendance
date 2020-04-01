@@ -62,7 +62,16 @@ public class FaceComparer {
         try {
             mc.createCollection();
             mc.addFacesToCollection();
-//            mc.addFacesToCollectionFromS3();
+//            mc.addFaceToCollectionFromS3();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void indexUploadedImage(String name) {
+        try {
+            mc.createCollection();
+            mc.addFaceToCollectionFromS3(name);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -72,7 +81,11 @@ public class FaceComparer {
      * COMPARE IMAGE WITH COLLECTION INDEXED IMAGES
      */
     public String compare(Image source){
-        String name = mc.searchFacesByImageResult(source);
+        String photoName = mc.searchFacesByImageResult(source);
+        /**
+         * Remove .jpg part from name
+         */
+        String name = photoName.split("\\.")[0];
         return name;
     }
 }

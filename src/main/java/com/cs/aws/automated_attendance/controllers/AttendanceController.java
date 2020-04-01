@@ -52,13 +52,14 @@ public class AttendanceController {
     public String upload(@RequestPart(value = "file") MultipartFile file){
 
         S3uploader s3uploader = new S3uploader();
-      //  FaceComparer faceComparer = new FaceComparer();
-        String fileUrl = "";
+        FaceComparer faceComparer = new FaceComparer();
+        String fileName = "";
         try{
             // Upload a text string as a new object.
-            fileUrl = s3uploader.uploadFile(file);
-            System.out.println("File Uploaded Successfully !! "+fileUrl);
-            return fileUrl;
+            fileName = s3uploader.uploadFile(file);
+            System.out.println("File Uploaded Successfully !! "+fileName);
+            faceComparer.indexUploadedImage(fileName);
+            return fileName;
             //faceComparer.loadTargetImages();
 
         } catch (AmazonServiceException e) {

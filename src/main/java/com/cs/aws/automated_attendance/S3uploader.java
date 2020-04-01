@@ -55,16 +55,17 @@ public class S3uploader {
     public String uploadFile(MultipartFile multipartFile) {
 
         String fileUrl = "";
+        String fileName = "";
         try {
             File file = convertMultiPartToFile(multipartFile);
-            String fileName = generateFileName(multipartFile);
+            fileName = generateFileName(multipartFile);
             fileUrl = endpointUrl + "/" + faceBucket + "/" + fileName;
             uploadFileTos3bucket(fileName, file);
             file.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return fileUrl;
+        return fileName;
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {

@@ -1,9 +1,12 @@
 package com.cs.aws.automated_attendance;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.model.*;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -11,16 +14,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 public class ManageCollection {
     AmazonRekognition rekognition = null;
-    AmazonS3 s3client = null;
 
 //    @Value("${rekognitionConfigs.collectionName}")
     private String collectionName = "cloudProject2";
 
 //   @Value("${rekognitionConfigs.localPath}")
-    private String localPath = "src/main/java/com/cs/aws/automated_attendance/images/";
+    private String localPath = "src/main/java/com/cs/aws/automated_attendance/images_c/";
 
 //   @Value("${s3config.faceBucket}")
     private String s3BucketName = "bucketsk1995";
@@ -50,14 +53,15 @@ public class ManageCollection {
      * addFacesToCollection using file in local machine
      */
     public void addFacesToCollection() {
-        processCollection(localPath);
+        if(localPath!=null)
+            processCollection(localPath);
+        else
+            System.out.println("No Local Path!!");
     }
 
     private void processCollection(String path) {
         try {
-            /**
-             * Todo : Use s3 as repository
-             */
+
             File directory = new File(path);
             File[] files = directory.listFiles();
             for (File targetImgFileName : files) {
@@ -87,11 +91,42 @@ public class ManageCollection {
     }
 
     /**
-     * addFacesToCollection using file in local machine
+     * addFacesToCollection from s3
      */
-    public void addFacesToCollectionFromS3() {
+    public void addFaceToCollectionFromS3(String name) {
 
+        Image image = new Image()
+                .withS3Object(new S3Object()
+                        .withBucket(s3BucketName)
+                        .withName(name));
 
+        IndexFacesRequest indexFacesRequest = new IndexFacesRequest()
+                .withImage(image)
+                .withQualityFilter(QualityFilter.AUTO)
+                .withMaxFaces(1)
+                .withCollectionId(collectionName)
+                .withExternalImageId(name)
+                .withDetectionAttributes("DEFAULT");
+
+        IndexFacesResult indexFacesResult = rekognition.indexFaces(indexFacesRequest);
+
+        System.out.println("Results for " + name );
+        System.out.println("Faces indexed:");
+        List<FaceRecord> faceRecords = indexFacesResult.getFaceRecords();
+        for (FaceRecord faceRecord : faceRecords) {
+            System.out.println("  Face ID: " + faceRecord.getFace().getFaceId());
+            System.out.println("  Location:" + faceRecord.getFaceDetail().getBoundingBox().toString());
+        }
+
+        List<UnindexedFace> unindexedFaces = indexFacesResult.getUnindexedFaces();
+        System.out.println("Faces not indexed:");
+        for (UnindexedFace unindexedFace : unindexedFaces) {
+            System.out.println("  Location:" + unindexedFace.getFaceDetail().getBoundingBox().toString());
+            System.out.println("  Reasons:");
+            for (String reason : unindexedFace.getReasons()) {
+                System.out.println("   " + reason);
+            }
+        }
     }
 
     /**
