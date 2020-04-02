@@ -35,7 +35,7 @@ export class StudentRegisterComponent implements OnInit {
       this.studentmgtDto.nic = this.studentRegister.value.nic;
       this.studentmgtDto.dob = this.studentRegister.value.dob;
       this.studentmgtDto.email = this.studentRegister.value.email;
-      alert(this.studentmgtDto);
+      console.log(this.studentmgtDto);
       console.log(this.studentmgtDto);
 
       const formData = new FormData();

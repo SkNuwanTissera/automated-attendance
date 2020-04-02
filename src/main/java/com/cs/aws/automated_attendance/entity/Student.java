@@ -1,4 +1,4 @@
-package com.cs.aws.automated_attendance.repository;
+package com.cs.aws.automated_attendance.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +15,15 @@ public class Student {
     private String dob;
     private String notes;
     private String email;
+    private String nic;
+
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
 
     public Student() {
     }

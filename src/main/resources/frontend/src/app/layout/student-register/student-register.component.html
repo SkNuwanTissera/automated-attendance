@@ -3,12 +3,13 @@
 
     <div class="row">
         <div class="col-lg-6">
-
-            <form [formGroup]="studentRegister"  >
+            <br/><br/>
+            <div class="col-md-6 offset-md-8">
+            <form [formGroup]="studentRegister">
 
                 <fieldset class="form-group">
                     <label>First Name</label>
-                    <input  placeholder="Enter First Name"  [name]="fname" formControlName="fname">
+                    <input  class="form-control" placeholder="Enter First Name"  [name]="fname" formControlName="fname">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Last Name</label>
@@ -31,15 +32,16 @@
                 </fieldset>
 
                 <fieldset class="form-group">
-                    <label for="InputFile">File input</label>
-                    <input type="file" class="form-control-file" formControlName="InputFile" name="InputFile"(change)="onFileSelect($event)" >
+                    <label>File input</label>
+                    <input type="file" class="form-control-file" formControlName="InputFile" name="InputFile" (change)="onFileSelect($event)" >
+                    <p *ngIf="studentRegister.controls.InputFile.errors?.required" style="color: #0a040e">Image is required!</p>
                 </fieldset>
 
-                <button type="submit" (click)="onsubmit()" class="btn btn-secondary">Submit Button</button>
+                <button type="submit" (click)="onsubmit()" class="btn btn-success">Submit Button</button>&nbsp;&nbsp;
                 <button type="reset" class="btn btn-secondary">Reset Button</button>
 
             </form>
-
+            </div>
         </div>
         <!--<div class="col-lg-6">-->
             <!--<div class="row">-->

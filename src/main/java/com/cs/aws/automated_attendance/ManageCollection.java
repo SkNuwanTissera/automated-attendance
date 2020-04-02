@@ -23,7 +23,7 @@ public class ManageCollection {
     private String collectionName = "cloudProject2";
 
 //   @Value("${rekognitionConfigs.localPath}")
-    private String localPath = "src/main/java/com/cs/aws/automated_attendance/images_c/";
+    private String localPath = "src/main/java/com/cs/aws/automated_attendance/images/";
 
 //   @Value("${s3config.faceBucket}")
     private String s3BucketName = "bucketsk1995";

@@ -2,17 +2,24 @@ package com.cs.aws.automated_attendance.controllers;
 
 import com.cs.aws.automated_attendance.exceptions.ResourceNotFoundException;
 import com.cs.aws.automated_attendance.repository.AttendanceRepository;
-import com.cs.aws.automated_attendance.repository.Student;
+import com.cs.aws.automated_attendance.entity.Student;
+import com.cs.aws.automated_attendance.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path="/student")
+@RequestMapping(path="/api/student")
+@CrossOrigin
 public class StudentController {
+
+    @Autowired
+    private StudentService studentService;
+
     @Autowired
     private AttendanceRepository attendanceRepository;
 
@@ -87,5 +94,11 @@ public class StudentController {
         s.setEmail(student.getEmail());
 
         return ResponseEntity.ok(attendanceRepository.save(s));
+    }
+
+    @PostMapping("/saveStudent")
+    public void saveDetails(@RequestParam("data") String model,@RequestPart(value = "file") MultipartFile file) throws Exception {
+        //  ,@RequestParam("file") List<MultipartFile> multipartFile
+        studentService.saveStudent(model,file);
     }
 }
