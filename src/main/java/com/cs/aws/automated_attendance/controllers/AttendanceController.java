@@ -7,6 +7,7 @@ import com.amazonaws.util.IOUtils;
 import com.cs.aws.automated_attendance.FaceComparer;
 import com.cs.aws.automated_attendance.LambdaTrigger;
 import com.cs.aws.automated_attendance.S3uploader;
+import com.cs.aws.automated_attendance.services.AttendanceService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,8 @@ import java.nio.ByteBuffer;
 @RestController
 @RequestMapping("/face")
 public class AttendanceController {
+
+    AttendanceService attendanceService;
 
     /**
      * Match face in input image with trained classifier
@@ -101,6 +104,11 @@ public class AttendanceController {
             e.printStackTrace();
         }
         return 404;
+    }
+
+    @PostMapping("/markAttendance")
+    public void markAttendance(@RequestParam("data") String model,@RequestPart(value = "file") MultipartFile file) throws Exception {
+        attendanceService.markAttendace(model,file);
     }
 
 }
