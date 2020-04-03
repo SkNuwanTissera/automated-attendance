@@ -1,7 +1,7 @@
 package com.cs.aws.automated_attendance.controllers;
 
 import com.cs.aws.automated_attendance.exceptions.ResourceNotFoundException;
-import com.cs.aws.automated_attendance.repository.AttendanceRepository;
+import com.cs.aws.automated_attendance.repository.StudentRepository;
 import com.cs.aws.automated_attendance.entity.Student;
 import com.cs.aws.automated_attendance.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class StudentController {
     private StudentService studentService;
 
     @Autowired
-    private AttendanceRepository attendanceRepository;
+    private StudentRepository studentRepository;
 
     /**
      * Add new Student
@@ -46,7 +46,7 @@ public class StudentController {
         n.setEmail(email);
         n.setNotes(notes);
         n.setDob(dob);
-        attendanceRepository.save(n);
+        studentRepository.save(n);
         return new ResponseEntity<Student>(n, HttpStatus.OK);
     }
 
@@ -56,7 +56,7 @@ public class StudentController {
      */
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Student> getAllStudents() {
-        return attendanceRepository.findAll();
+        return studentRepository.findAll();
     }
 
     /**
@@ -66,9 +66,9 @@ public class StudentController {
      */
     @DeleteMapping(path="/delete/{id}")
     public @ResponseBody ResponseEntity<?> deleteStudent(@PathVariable Long id){
-        Student student = attendanceRepository.findById(id)
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
-        attendanceRepository.delete(student);
+        studentRepository.delete(student);
         return ResponseEntity.ok().build();
     }
 
@@ -81,19 +81,19 @@ public class StudentController {
     @PutMapping(path="/update/{id}")
     public @ResponseBody ResponseEntity<Student> updateStudent(@PathVariable Long id,@Valid @RequestBody Student student){
 
-        if (!attendanceRepository.findById(id).isPresent()) {
+        if (!studentRepository.findById(id).isPresent()) {
             System.out.println("Cannot find the student");
             ResponseEntity.badRequest().build();
         }
 
-        Student s = attendanceRepository.findById(id).get();
+        Student s = studentRepository.findById(id).get();
         s.setFname(student.getFname());
         s.setLname(student.getLname());
         s.setDob(student.getDob());
         s.setNotes(student.getNotes());
         s.setEmail(student.getEmail());
 
-        return ResponseEntity.ok(attendanceRepository.save(s));
+        return ResponseEntity.ok(studentRepository.save(s));
     }
 
     @PostMapping("/saveStudent")
@@ -101,4 +101,6 @@ public class StudentController {
         //  ,@RequestParam("file") List<MultipartFile> multipartFile
         studentService.saveStudent(model,file);
     }
+
+
 }
