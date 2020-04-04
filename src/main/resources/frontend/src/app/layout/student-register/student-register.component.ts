@@ -29,7 +29,7 @@ export class StudentRegisterComponent implements OnInit {
 
 
   public onsubmit() {
-      alert('adasdsa');
+      // alert('adasdsa');
       this.studentmgtDto.fname = this.studentRegister.value.fname;
       this.studentmgtDto.lname = this.studentRegister.value.lname;
       this.studentmgtDto.nic = this.studentRegister.value.nic;
