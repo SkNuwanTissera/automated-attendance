@@ -1,5 +1,11 @@
-
-    <app-page-header [heading]="'Register Student'" [icon]="'fa-edit'"></app-page-header>
+<div class="row">
+    <div class="col-lg-6">
+        <br/><br/>
+        <div class="col-md-6 offset-md-8">
+            <h1>Sign Up ...</h1>
+        </div>
+    </div>
+</div>
 
     <div class="row">
         <div class="col-lg-6">
@@ -33,12 +39,12 @@
 
                 <fieldset class="form-group">
                     <label>File input</label>
-                    <input type="file" class="form-control-file" formControlName="InputFile" name="InputFile" (change)="onFileSelect($event)" >
+                    <input type="file" class="form-control-file" formControlName="InputFile" name="InputFile" (change)="onFileSelect($event)" ><br/>
                     <p *ngIf="studentRegister.controls.InputFile.errors?.required" style="color: #0a040e">Image is required!</p>
                 </fieldset>
 
-                <button type="submit" (click)="onsubmit()" class="btn btn-success">Submit Button</button>&nbsp;&nbsp;
-                <button type="reset" class="btn btn-secondary">Reset Button</button>
+                <button type="submit" (click)="onsubmit()" class="btn btn-success">Register</button>&nbsp;&nbsp;
+                <button type="reset" class="btn btn-secondary">Clear</button>
 
             </form>
             </div>
