@@ -7,7 +7,10 @@ import com.amazonaws.util.IOUtils;
 import com.cs.aws.automated_attendance.FaceComparer;
 import com.cs.aws.automated_attendance.LambdaTrigger;
 import com.cs.aws.automated_attendance.S3uploader;
+import com.cs.aws.automated_attendance.dto.FaceFileDto;
+import com.cs.aws.automated_attendance.dto.StudentDto;
 import com.cs.aws.automated_attendance.services.AttendanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,11 +19,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+
+
 @RestController
 @RequestMapping("/face")
 @CrossOrigin
 public class AttendanceController {
 
+    @Autowired
     AttendanceService attendanceService;
 
     /**
@@ -107,9 +113,12 @@ public class AttendanceController {
         return 404;
     }
 
-    @PostMapping("/markAttendance")
-    public void markAttendance(@RequestParam("data") String model,@RequestPart(value = "file") MultipartFile file) throws Exception {
-        attendanceService.markAttendace(model,file);
+
+    @PostMapping("/getFaceImage")
+    public StudentDto getFaceImage(@RequestBody FaceFileDto faceFileDto) throws Exception {
+        System.out.println("kahuna matata"+faceFileDto.getImagedataURl());
+        StudentDto studentDto=attendanceService.markAttendace(faceFileDto.getImagedataURl());
+       return studentDto;
     }
 
 }
