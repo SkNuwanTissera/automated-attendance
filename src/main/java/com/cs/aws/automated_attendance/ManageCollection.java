@@ -50,6 +50,26 @@ public class ManageCollection {
     }
 
     /**
+     * delete Collection
+     */
+    public void deleteCollection(String collectionId){
+        try {
+
+            System.out.println("Deleting collections");
+
+            DeleteCollectionRequest request = new DeleteCollectionRequest()
+                    .withCollectionId(collectionId);
+            DeleteCollectionResult deleteCollectionResult = rekognition.deleteCollection(request);
+
+            System.out.println(collectionId + ": " + deleteCollectionResult.getStatusCode()
+                    .toString());
+
+        } catch (ResourceInUseException e){
+            System.out.println("Collection is already is use !!");
+        }
+    }
+
+    /**
      * addFacesToCollection using file in local machine
      */
     public void addFacesToCollection() {
