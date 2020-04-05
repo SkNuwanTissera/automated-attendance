@@ -3,6 +3,8 @@ package com.cs.aws.automated_attendance.services.servicesImpl;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.cs.aws.automated_attendance.FaceComparer;
+import com.cs.aws.automated_attendance.controllers.AmazonSES;
+import com.cs.aws.automated_attendance.dto.SESEmail;
 import com.cs.aws.automated_attendance.entity.Student;
 import com.cs.aws.automated_attendance.S3uploader;
 import com.cs.aws.automated_attendance.repository.StudentRepository;
@@ -37,8 +39,8 @@ public class StudentServiceImpl implements StudentService {
             fileUrl = s3uploader.uploadFile(file);
             faceComparer.indexUploadedImage(file.getOriginalFilename());
             System.out.println("File Uploaded Successfully !! "+fileUrl);
-
-
+            AmazonSES amazonSES = new AmazonSES();
+            amazonSES.sendEmail(this.getEmailSendObject(student));
 
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process
@@ -76,6 +78,23 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
+    private SESEmail getEmailSendObject(String student1) throws JSONException {
 
+        ArrayList<String> stringArray = new ArrayList<String>();
+        JSONObject jsonObject=new JSONObject(student1);
 
+        SESEmail emailDetails = new SESEmail();
+        for (int i = 0; i < jsonObject.length(); i++) {
+            stringArray.add((String) jsonObject.get("fname"));
+            stringArray.add((String) jsonObject.get("email"));
+        }
+
+        emailDetails.setTo(stringArray.get(1));
+        emailDetails.setFrom("sliit.sk95@gmail.com");
+        emailDetails.setSubject("Hello from ACAS");
+        emailDetails.setText("Hi "+ stringArray.get(0));
+        emailDetails.setHtmlcontent("<h4> Thanks for verification</h4>");
+
+        return emailDetails;
+    }
 }
