@@ -18,6 +18,7 @@ import java.nio.ByteBuffer;
 
 @RestController
 @RequestMapping("/face")
+@CrossOrigin
 public class AttendanceController {
 
     AttendanceService attendanceService;
