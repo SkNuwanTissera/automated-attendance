@@ -54,15 +54,22 @@ public class AmazonSES {
       email.setFrom("sknut95@gmail.com");
 
     try {
-
       // Verify Email First..
-      if(!isEmailValid(email.getTo())){
-        System.out.println("Email needs to Verify..");
-        System.out.println("Verification Send ..");
-        verifyEmail(email.getTo());
+      if(!isEmailValid(email.getTo())) {
+        Runnable emailVerifyThread = new Runnable() {
+          @Override
+          public void run() {
+
+            System.out.println("Email needs to Verify..");
+            System.out.println("Verification Send ..");
+            verifyEmail(email.getTo());
+          }
+        };
+
+        Thread thread = new Thread(emailVerifyThread, "EmailVerifyThread");
+        thread.start();
         return false;
       }
-
       //Send Email Then...
       credentials = new ProfileCredentialsProvider("default").getCredentials();
       AmazonSimpleEmailService client = 
