@@ -157,7 +157,7 @@ public class ManageCollection {
             SearchFacesByImageRequest req = new SearchFacesByImageRequest();
             req.setCollectionId(collectionName);
             req.setImage(image);
-            req.setFaceMatchThreshold(70F);
+            req.setFaceMatchThreshold(50F);
             req.withMaxFaces(1);
             SearchFacesByImageResult result = rekognition.searchFacesByImage(req);
             for (FaceMatch fm : result.getFaceMatches()) {

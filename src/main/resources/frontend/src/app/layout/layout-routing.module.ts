@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import {StudentRegisterComponent} from './student-register/student-register.component';
 import {HttpClientModule} from '@angular/common/http';
+import {MarkAttendanceComponent} from "./mark-attendance/mark-attendance.component";
 
 const routes: Routes = [
     {
@@ -18,7 +19,11 @@ const routes: Routes = [
             { path: 'grid', loadChildren: () => import('./grid/grid.module').then(m => m.GridModule) },
             { path: 'components', loadChildren: () => import('./bs-component/bs-component.module').then(m => m.BsComponentModule) },
             { path: 'blank-page', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) },
-            {path: 'student-register', component: StudentRegisterComponent}
+            {path: 'student-register', component: StudentRegisterComponent},
+            {
+                path:'mark-attendance',
+                component: MarkAttendanceComponent,
+            }
         ]
     }
 ];
