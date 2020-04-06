@@ -11,6 +11,9 @@ import { StudentRegisterComponent } from './student-register/student-register.co
 import {PageHeaderModule} from '../shared/modules';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StudentRegisterService} from './student-register/student-register-service';
+import { MarkAttendanceComponent } from './mark-attendance/mark-attendance.component';
+import {MarkAttendanceService} from "./mark-attendance/mark-attendance.service";
+import {WebcamModule} from "ngx-webcam";
 
 
 @NgModule({
@@ -21,12 +24,14 @@ import {StudentRegisterService} from './student-register/student-register-servic
         TranslateModule,
         NgbDropdownModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        WebcamModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, StudentRegisterComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, StudentRegisterComponent, MarkAttendanceComponent],
     entryComponents: [StudentRegisterComponent],
     providers: [
-        StudentRegisterService
+        StudentRegisterService,
+        MarkAttendanceService
     ]
 })
 export class LayoutModule {}

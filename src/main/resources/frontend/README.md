@@ -14,3 +14,8 @@ npm start
 ###### Mark attendance using face recognition
 ###### Camera integration in UI
 
+#### Other commands
+Delete collection 
+`aws rekognition delete-collection  --collection-id "cloudProject2"` <br/>
+Empty Bucket
+`aws s3 rm s3://bucketsk1995 --recursive`
