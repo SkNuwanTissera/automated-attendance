@@ -9,6 +9,7 @@ import com.cs.aws.automated_attendance.LambdaTrigger;
 import com.cs.aws.automated_attendance.S3uploader;
 import com.cs.aws.automated_attendance.dto.FaceFileDto;
 import com.cs.aws.automated_attendance.dto.StudentDto;
+import com.cs.aws.automated_attendance.repository.StudentRepository;
 import com.cs.aws.automated_attendance.services.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class AttendanceController {
 
     @Autowired
     AttendanceService attendanceService;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     /**
      * Match face in input image with trained classifier
@@ -116,7 +120,7 @@ public class AttendanceController {
 
     @PostMapping("/getFaceImage")
     public StudentDto getFaceImage(@RequestBody FaceFileDto faceFileDto) throws Exception {
-        System.out.println("kahuna matata"+faceFileDto.getImagedataURl());
+        System.out.println(faceFileDto.getImagedataURl() );
         StudentDto studentDto=attendanceService.markAttendace(faceFileDto.getImagedataURl());
        return studentDto;
     }

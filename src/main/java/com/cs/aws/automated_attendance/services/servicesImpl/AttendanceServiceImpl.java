@@ -6,8 +6,8 @@ import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.util.IOUtils;
 import com.cs.aws.automated_attendance.FaceComparer;
 import com.cs.aws.automated_attendance.S3uploader;
-import com.cs.aws.automated_attendance.dto.FaceFileDto;
 import com.cs.aws.automated_attendance.dto.StudentDto;
+import com.cs.aws.automated_attendance.entity.Attendance;
 import com.cs.aws.automated_attendance.entity.Student;
 import com.cs.aws.automated_attendance.repository.AttendanceRepository;
 import com.cs.aws.automated_attendance.repository.StudentRepository;
@@ -25,6 +25,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Optional;
@@ -37,8 +41,14 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Autowired
     private StudentRepository studentRepository;
 
+    static DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
     @Autowired
     private AttendanceRepository attendanceRepository;
+
+    public AttendanceServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
 
     @Override
@@ -57,16 +67,27 @@ public class AttendanceServiceImpl implements AttendanceService {
         System.out.printf(studentId);
 
         Optional<Student> student= studentRepository.findById(Long.parseLong(studentId));
-        StudentDto studentDto= new StudentDto();
+        Attendance studentO= new Attendance();
+
         if(student!=null){
-            studentDto.setId(student.get().getId());
-            studentDto.setFname(student.get().getFname());
-            studentDto.setLname(student.get().getFname());
-            studentDto.setNic(student.get().getEmail());
+            studentO.setId(student.get().getId());
+            studentO.setName(student.get().getFname() + " " + student.get().getLname());
+            studentO.setLecture("ASAS Lecture 1");
+            //Format LocalDateTime
+            String formattedDateTime = LocalDateTime.now().format(formatter);
+            studentO.setTime(formattedDateTime);
+            attendanceRepository.save(studentO);
         }
 
+        StudentDto studentDTO= new StudentDto();
+        if(student!=null){
+            studentDTO.setId(student.get().getId());
+            studentDTO.setFname(student.get().getFname());
+            studentDTO.setLname(student.get().getFname());
+            studentDTO.setNic(student.get().getEmail());
+        }
 
-        return studentDto;
+        return studentDTO;
     }
 
 }
