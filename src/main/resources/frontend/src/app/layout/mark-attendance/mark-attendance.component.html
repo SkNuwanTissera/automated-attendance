@@ -1,23 +1,31 @@
-<div>
-    <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
+<div class="row">
+        <div class="col-lg-6">
+            <br/><br/>
+            <div class="col-md-6 offset-md-7">
+                <div>
+                    <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)"></webcam>
 
+                </div>
+                <div>
+                    <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div>
+                </div>
+                <div>
+
+                    <label>Student Name</label>
+                    <input class="form-control" type="text"
+                           type="text"
+                           [readonly]="true"
+                           id="studentName"
+                           name="studentName"
+                           [name]="studentName"
+
+                    />
+
+                </div>
+            </div>
+        </div>
 </div>
-<div>
-    <div class="actionBtn" (click)="triggerSnapshot();" title="Take Picture">📸</div>
-</div>
-<div>
 
-    <label>Student Name</label>
-    <input
-        type="text"
-        [readonly]="true"
-        id="studentName"
-        name="studentName"
-        [name]="studentName"
-
-    />
-
-</div>
 <!--<table class="table mat-elevation-z4 text-center">-->
     <!--<thead>-->
     <!--<tr>-->

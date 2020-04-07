@@ -36,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
         try{
 
            // file.getOriginalFilename().replace(file.getOriginalFilename(),student1.getFname().toLowerCase());
-            fileUrl = s3uploader.uploadFile(file);
+            fileUrl = s3uploader.uploadFileWithIndexNumber(file,student1.getId().toString());
             faceComparer.indexUploadedImage(student1.getId().toString());
             System.out.println("File Uploaded Successfully !! "+fileUrl);
             AmazonSES amazonSES = new AmazonSES();

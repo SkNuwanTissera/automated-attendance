@@ -20,7 +20,7 @@ export class MarkAttendanceService {
     //     );
     // }
     passImage(image: FaceFileDto): Observable<any> {
-        console.log(image);
+        //console.log(image);
         return this.httpClient.post(
             'http://localhost:8080/face/getFaceImage',image,{headers: this.headersJson}
         );

@@ -68,6 +68,19 @@ public class S3uploader {
         return fileName;
     }
 
+    public String uploadFileWithIndexNumber(MultipartFile multipartFile, String indexNumber){
+        String fileUrl = "";
+        try {
+            File file = convertMultiPartToFile(multipartFile);
+            fileUrl = endpointUrl + "/" + faceBucket + "/" + indexNumber;
+            uploadFileTos3bucket(indexNumber, file);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileUrl;
+    }
+
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
