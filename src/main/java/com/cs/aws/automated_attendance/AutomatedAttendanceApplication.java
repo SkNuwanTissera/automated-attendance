@@ -8,10 +8,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 @EnableScheduling
 @PropertySource("classpath:application.properties")
-@ComponentScan("com.cs.aws.automated_attendance.services")
+//@ComponentScan("com.cs.aws.automated_attendance.services")
 public class AutomatedAttendanceApplication {
 
     public static void main(String[] args) {

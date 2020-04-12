@@ -96,14 +96,14 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
 
-    @CacheEvict(cacheNames="attendance", allEntries=true)
+//    @CacheEvict(cacheNames="attendance", allEntries=true)
     public void flushCache() {
         System.out.println("\nClearing Cache of Attendance ... ");
         //getAllAttendance();
     }
 
     @Override
-    @Cacheable("attendance")
+//    @Cacheable("attendance")
     public List<StudentDto> getAllAttendance() {
         List<StudentDto> attendanceList=new ArrayList<>();
         System.out.println("\nRetrieving Attendance from System ... ");

@@ -108,7 +108,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    @Cacheable("student")
+//    @Cacheable("student")
     public List<StudentDto> getAllStudentList() {
         List<StudentDto> studentList=new ArrayList<>();
         System.out.println("Retrieving Students from System ... ");
@@ -123,7 +123,7 @@ public class StudentServiceImpl implements StudentService {
         return studentList;
     }
 
-    @CacheEvict(cacheNames="student", allEntries=true)
+//    @CacheEvict(cacheNames="student", allEntries=true)
     public void flushCacheStudent() {
         System.out.println("\nClearing Cache Student ... ");
         //getAllStudentList();
