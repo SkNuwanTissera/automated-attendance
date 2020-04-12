@@ -5,6 +5,7 @@ import {StudentRegisterComponent} from './student-register/student-register.comp
 import {HttpClientModule} from '@angular/common/http';
 import {MarkAttendanceComponent} from "./mark-attendance/mark-attendance.component";
 import {StudentAttendaceTableComponent} from "./student-attendace-table/student-attendace-table.component";
+import {StudentListComponent} from "./student-list/student-list.component";
 
 const routes: Routes = [
     {
@@ -29,6 +30,10 @@ const routes: Routes = [
                 path:'student-attendance-table',
                 component:StudentAttendaceTableComponent,
 
+            },
+            {
+                path:'student-table',
+                component:StudentListComponent
             }
         ]
     }

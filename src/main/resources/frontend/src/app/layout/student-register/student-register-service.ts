@@ -15,7 +15,6 @@ export class StudentRegisterService {
     }
 
     saveStudent(formData: FormData) {
-        alert(formData);
         return this.httpClient.post(
              'http://localhost:8080/api/student/saveStudent/',
             formData

@@ -27,6 +27,11 @@ export class MarkAttendanceService {
     getAttendanceList(){
         return this.httpClient.get('http://localhost:8080/face/getAllAttendnaceList');
     }
+
+    getAllStudents(){
+        return this.httpClient.get('http://localhost:8080/api/student/getAllstudentList');
+
+    }
 }
 
 
