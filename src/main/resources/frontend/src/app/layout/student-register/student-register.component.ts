@@ -42,6 +42,7 @@ export class StudentRegisterComponent implements OnInit {
       formData.append('data', JSON.stringify(this.studentmgtDto));
       formData.append('file', this.studentRegister.get('InputFile').value);
       this.studentRegisterService.saveStudent(formData).subscribe((data) => {
+         alert("save Student successfully");
         console.log('success');
     });
   }

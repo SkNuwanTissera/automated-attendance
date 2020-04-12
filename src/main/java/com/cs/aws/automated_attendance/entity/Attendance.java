@@ -13,6 +13,7 @@ public class Attendance {
     private String name;
     private String lecture;
     private String time;
+    private Long studentId;
 
     public Long getId() {
         return id;
@@ -44,5 +45,13 @@ public class Attendance {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 }

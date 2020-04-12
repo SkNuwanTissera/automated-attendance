@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
+import java.util.List;
 
 
 @RestController
@@ -120,9 +120,15 @@ public class AttendanceController {
 
     @PostMapping("/getFaceImage")
     public StudentDto getFaceImage(@RequestBody FaceFileDto faceFileDto) throws Exception {
-        System.out.println(faceFileDto.getImagedataURl() );
         StudentDto studentDto=attendanceService.markAttendace(faceFileDto.getImagedataURl());
        return studentDto;
+    }
+
+
+    @GetMapping("/getAllAttendnaceList")
+    public List<StudentDto> getAttendanceList(){
+        List<StudentDto> allList=attendanceService.getAllAttendance();
+        return allList;
     }
 
 }
