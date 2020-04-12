@@ -15,6 +15,7 @@ import { MarkAttendanceComponent } from './mark-attendance/mark-attendance.compo
 import {MarkAttendanceService} from "./mark-attendance/mark-attendance.service";
 import {WebcamModule} from "ngx-webcam";
 import { StudentAttendaceTableComponent } from './student-attendace-table/student-attendace-table.component';
+import { StudentListComponent } from './student-list/student-list.component';
 
 
 
@@ -31,7 +32,7 @@ import { StudentAttendaceTableComponent } from './student-attendace-table/studen
         ReactiveFormsModule,
         WebcamModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, StudentRegisterComponent, MarkAttendanceComponent, StudentAttendaceTableComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, StudentRegisterComponent, MarkAttendanceComponent, StudentAttendaceTableComponent, StudentListComponent],
     entryComponents: [StudentRegisterComponent],
     providers: [
         StudentRegisterService,

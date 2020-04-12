@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Attendance {
@@ -12,7 +13,7 @@ public class Attendance {
     private Long id;
     private String name;
     private String lecture;
-    private String time;
+    private Date time;
     private Long studentId;
 
     public Long getId() {
@@ -39,11 +40,11 @@ public class Attendance {
         this.lecture = lecture;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
