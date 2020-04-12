@@ -25,14 +25,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -67,22 +65,16 @@ public class AttendanceServiceImpl implements AttendanceService {
         String studentId = faceComparer.compare(source);
         System.out.printf("Student ID "+ studentId);
 
-        Optional<Student> student = null;
-        try{
-             student= studentRepository.findById(Long.parseLong(studentId));
-        } catch (NullPointerException e){
-            System.out.println("Please retry with Clear view from Camera");
-        }
-
+        Optional<Student> student= studentRepository.findById(Long.parseLong(studentId));
+      //  Optional<Student> student= studentRepository.findById((long) 1);
         Attendance studentO= new Attendance();
 
         if(student!=null){
-            studentO.setId(student.get().getId());
+            studentO.setStudentId(student.get().getId());
             studentO.setName(student.get().getFname() + " " + student.get().getLname());
             studentO.setLecture("ASAS Lecture 1");
-            //Format LocalDateTime
-            String formattedDateTime = LocalDateTime.now().format(formatter);
-            studentO.setTime(formattedDateTime);
+
+            studentO.setTime(new Date());
             attendanceRepository.save(studentO);
         }
 
@@ -107,6 +99,8 @@ public class AttendanceServiceImpl implements AttendanceService {
             studentDto.setEmail(thisStudent.get().getEmail());
             studentDto.setId(thisStudent.get().getId());
             studentDto.setNic(thisStudent.get().getNic());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+            studentDto.setTime(dateFormat.format(studentList.getTime()));
             attendanceList.add(studentDto);
         });
         return attendanceList;
