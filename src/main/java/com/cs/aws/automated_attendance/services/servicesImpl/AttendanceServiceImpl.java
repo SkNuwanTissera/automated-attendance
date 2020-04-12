@@ -31,6 +31,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -64,9 +65,9 @@ public class AttendanceServiceImpl implements AttendanceService {
         Image source = new Image().withBytes(sourceImageBytes);
 
         String studentId = faceComparer.compare(source);
-        System.out.printf(studentId);
 
         Optional<Student> student= studentRepository.findById(Long.parseLong(studentId));
+       // Optional<Student> student= studentRepository.findById((long) 1);
         Attendance studentO= new Attendance();
 
         if(student!=null){
@@ -84,10 +85,26 @@ public class AttendanceServiceImpl implements AttendanceService {
             studentDTO.setId(student.get().getId());
             studentDTO.setFname(student.get().getFname());
             studentDTO.setLname(student.get().getFname());
-            studentDTO.setNic(student.get().getEmail());
+            studentDTO.setNic(student.get().getNic());
         }
 
         return studentDTO;
     }
+
+    @Override
+    public List<StudentDto> getAllAttendance() {
+        List<StudentDto> attendanceList=new ArrayList<>();
+        attendanceRepository.findAll().forEach(studentList->{
+            StudentDto studentDto=new StudentDto();
+            Optional<Student> thisStudent=studentRepository.findById(studentList.getStudentId());
+            studentDto.setFname(studentList.getName());
+            studentDto.setEmail(thisStudent.get().getEmail());
+            studentDto.setId(thisStudent.get().getId());
+            studentDto.setNic(thisStudent.get().getNic());
+            attendanceList.add(studentDto);
+        });
+        return attendanceList;
+    }
+
 
 }
