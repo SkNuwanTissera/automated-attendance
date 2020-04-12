@@ -64,9 +64,15 @@ public class AttendanceServiceImpl implements AttendanceService {
         Image source = new Image().withBytes(sourceImageBytes);
 
         String studentId = faceComparer.compare(source);
-        System.out.printf(studentId);
+        System.out.printf("Student ID "+ studentId);
 
-        Optional<Student> student= studentRepository.findById(Long.parseLong(studentId));
+        Optional<Student> student = null;
+        try{
+             student= studentRepository.findById(Long.parseLong(studentId));
+        } catch (NullPointerException e){
+            System.out.println("Please retry with Clear view from Camera");
+        }
+
         Attendance studentO= new Attendance();
 
         if(student!=null){
