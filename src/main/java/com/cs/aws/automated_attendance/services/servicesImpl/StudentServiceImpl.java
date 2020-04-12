@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
@@ -44,6 +47,7 @@ public class StudentServiceImpl implements StudentService {
             System.out.println("File Uploaded Successfully !! "+fileUrl);
             AmazonSES amazonSES = new AmazonSES();
             amazonSES.sendEmail(this.getEmailSendObject(student));
+            flushCacheStudent();
 
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process
@@ -104,8 +108,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Cacheable("student")
     public List<StudentDto> getAllStudentList() {
         List<StudentDto> studentList=new ArrayList<>();
+        System.out.println("Retrieving Students from System ... ");
         studentRepository.findAll().forEach(studentList1->{
             StudentDto studentDto=new StudentDto();
             studentDto.setFname(studentList1.getFname());
@@ -117,5 +123,10 @@ public class StudentServiceImpl implements StudentService {
         return studentList;
     }
 
+    @CacheEvict(cacheNames="student", allEntries=true)
+    public void flushCacheStudent() {
+        System.out.println("\nClearing Cache Student ... ");
+        //getAllStudentList();
+    }
 
 }
