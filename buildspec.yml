@@ -1,7 +1,4 @@
 version: 0.2
-env:
-  variables:
-    JAVA_HOME: "/usr/bin/java"
 phases:
   install:
     commands:
