@@ -97,6 +97,12 @@
                 <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration combine.self="override">
+                    <excludes>
+                        <exclude>testImgs/**</exclude>
+                        <exclude>frontend/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

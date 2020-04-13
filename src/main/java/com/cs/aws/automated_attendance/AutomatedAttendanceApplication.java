@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 //@EnableCaching
-@EnableScheduling
+//@EnableScheduling
 @PropertySource("classpath:application.properties")
 //@ComponentScan("com.cs.aws.automated_attendance.services")
 public class AutomatedAttendanceApplication {

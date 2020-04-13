@@ -72,7 +72,7 @@ public class AmazonSES {
       }
       //Send Email Then...
       credentials = new ProfileCredentialsProvider("default").getCredentials();
-      AmazonSimpleEmailService client = 
+      AmazonSimpleEmailService client =
           AmazonSimpleEmailServiceClientBuilder.standard()
           // Replace US_WEST_2 with the AWS Region you're using for
           // Amazon SES.
@@ -102,6 +102,7 @@ public class AmazonSES {
     }
     return false;
   }
+
 
   @PostMapping("/verify")
   public VerifyEmailIdentityResult verifyEmail(String to){
