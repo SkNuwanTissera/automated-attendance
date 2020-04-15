@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {StudentRegisterService} from './student-register-service';
 import {StudentDto} from '../../shared/Models/StudentDto';
+import Swal from 'sweetalert2'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -42,7 +43,12 @@ export class StudentRegisterComponent implements OnInit {
       formData.append('data', JSON.stringify(this.studentmgtDto));
       formData.append('file', this.studentRegister.get('InputFile').value);
       this.studentRegisterService.saveStudent(formData).subscribe((data) => {
-         alert("save Student successfully");
+         // alert("save Student successfully");
+          Swal.fire(
+              'Successfully Registered!',
+              'Now you can mark you attendance!',
+              'success'
+          )
         console.log('success');
     });
   }

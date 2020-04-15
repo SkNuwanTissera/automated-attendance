@@ -101,6 +101,7 @@
                     <excludes>
                         <exclude>testImgs/**</exclude>
                         <exclude>frontend/**</exclude>
+                        <exclude>src/main/resources/frontend/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
