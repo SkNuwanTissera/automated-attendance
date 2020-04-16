@@ -85,7 +85,14 @@ public class FaceComparer {
         /**
          * Remove .jpg part from name
          */
-        String name = photoName.split("\\.")[0];
+        String name = null;
+        if(photoName!=null) {
+             name = photoName.split("\\.")[0];
+        }
+        else{
+            System.out.println("No valid detection for the face. Face detection returned null");
+            return null;
+        }
         return name;
     }
 }

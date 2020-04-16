@@ -14,6 +14,11 @@ import {StudentRegisterService} from './student-register/student-register-servic
 import { MarkAttendanceComponent } from './mark-attendance/mark-attendance.component';
 import {MarkAttendanceService} from "./mark-attendance/mark-attendance.service";
 import {WebcamModule} from "ngx-webcam";
+import { StudentAttendaceTableComponent } from './student-attendace-table/student-attendace-table.component';
+import { StudentListComponent } from './student-list/student-list.component';
+
+
+
 
 
 @NgModule({
@@ -27,7 +32,7 @@ import {WebcamModule} from "ngx-webcam";
         ReactiveFormsModule,
         WebcamModule
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, StudentRegisterComponent, MarkAttendanceComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, StudentRegisterComponent, MarkAttendanceComponent, StudentAttendaceTableComponent, StudentListComponent],
     entryComponents: [StudentRegisterComponent],
     providers: [
         StudentRegisterService,

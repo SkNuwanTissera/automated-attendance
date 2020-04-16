@@ -17,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,13 +28,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -64,18 +67,18 @@ public class AttendanceServiceImpl implements AttendanceService {
         Image source = new Image().withBytes(sourceImageBytes);
 
         String studentId = faceComparer.compare(source);
-        System.out.printf(studentId);
+        System.out.printf("Student ID "+ studentId);
 
         Optional<Student> student= studentRepository.findById(Long.parseLong(studentId));
+      //  Optional<Student> student= studentRepository.findById((long) 1);
         Attendance studentO= new Attendance();
 
         if(student!=null){
-            studentO.setId(student.get().getId());
+            studentO.setStudentId(student.get().getId());
             studentO.setName(student.get().getFname() + " " + student.get().getLname());
             studentO.setLecture("ASAS Lecture 1");
-            //Format LocalDateTime
-            String formattedDateTime = LocalDateTime.now().format(formatter);
-            studentO.setTime(formattedDateTime);
+
+            studentO.setTime(new Date());
             attendanceRepository.save(studentO);
         }
 
@@ -84,10 +87,39 @@ public class AttendanceServiceImpl implements AttendanceService {
             studentDTO.setId(student.get().getId());
             studentDTO.setFname(student.get().getFname());
             studentDTO.setLname(student.get().getFname());
-            studentDTO.setNic(student.get().getEmail());
+            studentDTO.setNic(student.get().getNic());
         }
+
+        flushCache();
 
         return studentDTO;
     }
+
+
+//    @CacheEvict(cacheNames="attendance", allEntries=true)
+    public void flushCache() {
+        System.out.println("\nClearing Cache of Attendance ... ");
+        //getAllAttendance();
+    }
+
+    @Override
+//    @Cacheable("attendance")
+    public List<StudentDto> getAllAttendance() {
+        List<StudentDto> attendanceList=new ArrayList<>();
+        System.out.println("\nRetrieving Attendance from System ... ");
+        attendanceRepository.findAll().forEach(studentList->{
+            StudentDto studentDto=new StudentDto();
+            Optional<Student> thisStudent=studentRepository.findById(studentList.getStudentId());
+            studentDto.setFname(studentList.getName());
+            studentDto.setEmail(thisStudent.get().getEmail());
+            studentDto.setId(thisStudent.get().getId());
+            studentDto.setNic(thisStudent.get().getNic());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
+            studentDto.setTime(dateFormat.format(studentList.getTime()));
+            attendanceList.add(studentDto);
+        });
+        return attendanceList;
+    }
+
 
 }

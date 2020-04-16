@@ -19,6 +19,7 @@ export class MarkAttendanceComponent implements OnInit {
     facefileDto : FaceFileDto;
     studentDetails: StudentDto;
     studentName : string;
+    studentNic: string;
 
   constructor(private markAttendanceService: MarkAttendanceService) { }
 
@@ -52,12 +53,12 @@ export class MarkAttendanceComponent implements OnInit {
         facefiledto.imagedataURl=this.webcamImage.imageAsDataUrl;
 
         this.markAttendanceService.passImage(facefiledto).subscribe(
-            (data) =>(data: any) => {
+            (data) => {
+
                 this.studentDetails = data;
                 this.studentName=this.studentDetails.fname;
-            }
-
-        );
+                this.studentNic=this.studentDetails.nic;
+        });
 
     }
 

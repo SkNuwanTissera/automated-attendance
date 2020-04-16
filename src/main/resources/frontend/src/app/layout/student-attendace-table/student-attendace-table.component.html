@@ -1,0 +1,35 @@
+<br/>
+<br/>
+<div class="row">
+    <div class="col col-xl-2 col-lg-12"></div>
+    <div class="col col-xl-8 col-lg-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                Attendance Report
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">ID no</th>
+                        <th style="text-align: center">Full Name</th>
+                        <th style="text-align: center">NIC</th>
+                        <th style="text-align: center">Email</th>
+                        <th style="text-align: center">Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of studentDetails">
+                        <td style="text-align: center">{{item.id}}</td>
+                        <td style="text-align: center">{{item.fname}}</td>
+                        <td style="text-align: center">{{item.nic}}</td>
+                        <td style="text-align: center">{{item.email}}</td>
+                        <td style="text-align: center">{{item.time}}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

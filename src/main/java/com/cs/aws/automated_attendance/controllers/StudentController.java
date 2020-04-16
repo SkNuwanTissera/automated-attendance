@@ -1,5 +1,6 @@
 package com.cs.aws.automated_attendance.controllers;
 
+import com.cs.aws.automated_attendance.dto.StudentDto;
 import com.cs.aws.automated_attendance.exceptions.ResourceNotFoundException;
 import com.cs.aws.automated_attendance.repository.StudentRepository;
 import com.cs.aws.automated_attendance.entity.Student;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="/api/student")
@@ -102,5 +104,11 @@ public class StudentController {
         studentService.saveStudent(model,file);
     }
 
+
+    @GetMapping("/getAllstudentList")
+    public List<StudentDto> getAttendanceList(){
+        List<StudentDto> allList=studentService.getAllStudentList();
+        return allList;
+    }
 
 }

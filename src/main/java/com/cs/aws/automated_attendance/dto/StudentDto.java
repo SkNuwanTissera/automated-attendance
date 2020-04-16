@@ -13,6 +13,7 @@ public class StudentDto {
     private String email;
     private String nic;
     private MultipartFile imagefile;
+    private String time;
 
 
 
@@ -78,5 +79,13 @@ public class StudentDto {
 
     public void setImagefile(MultipartFile imagefile) {
         this.imagefile = imagefile;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

@@ -19,11 +19,18 @@ export class MarkAttendanceService {
     //         formData
     //     );
     // }
-    passImage(image: FaceFileDto): Observable<any> {
+    passImage(image: FaceFileDto):Observable<any> {
         //console.log(image);
-        return this.httpClient.post(
-            'http://localhost:8080/face/getFaceImage',image,{headers: this.headersJson}
-        );
+        return this.httpClient.post('http://localhost:8080/face/getFaceImage',image,{headers: this.headersJson});
+    }
+
+    getAttendanceList(){
+        return this.httpClient.get('http://localhost:8080/face/getAllAttendnaceList');
+    }
+
+    getAllStudents(){
+        return this.httpClient.get('http://localhost:8080/api/student/getAllstudentList');
+
     }
 }
 

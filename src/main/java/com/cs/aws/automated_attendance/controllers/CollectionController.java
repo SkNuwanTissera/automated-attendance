@@ -19,9 +19,9 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-@RestController
-@CrossOrigin
-@RequestMapping("/api/collections")
+//@RestController
+//@CrossOrigin
+//@RequestMapping("/api/collections")
 public class CollectionController {
 
 
@@ -31,7 +31,7 @@ public class CollectionController {
     /**
      * createCollection
      */
-    @PostMapping("/create")
+//    @PostMapping("/create")
     public void createCollection(@PathVariable String collectionName) {
         try {
             CreateCollectionRequest req = new CreateCollectionRequest();
@@ -47,7 +47,7 @@ public class CollectionController {
     /**
      * delete Collection
      */
-    @DeleteMapping("/delete")
+//    @DeleteMapping("/delete")
     public void deleteCollection(@PathVariable String collectionId){
         try {
             
